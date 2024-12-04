@@ -1,0 +1,83 @@
+#!/bin/zsh
+#
+# .aliases - Set whatever shell aliases you want.
+#
+
+# mask built-ins with better defaults
+if command -v vim &>/dev/null; then
+   alias vi=vim
+fi
+
+# tar
+alias tarls="tar -tvf"
+alias untar="tar -xf"
+
+# find
+if command -v fd &>/dev/null; then
+   alias fdd='fd -H -t d'
+   alias fdf='fd -H -t f'
+else
+   alias fdd='find . -type d -name'
+   alias fdf='find . -type f -name'
+fi
+
+# url encode/decode
+alias urldecode='python3 -c "import sys, urllib.parse as ul; \
+    print(ul.unquote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; \
+    print (ul.quote_plus(sys.argv[1]))"'
+
+# misc
+alias zbench='for i in {1..10}; do /usr/bin/time zsh -lic exit; done'
+
+alias zdot='cd ~/.config/workstation-dirs/; nvim ./zsh/.zshrc'
+alias ndot='cd ~/.config/workstation-dirs/; nvim ./nvim/init.lua'
+alias tdot='cd ~/.config/workstation-dirs/; nvim ./tmux/tmux.conf'
+
+if command -v eza &>/dev/null; then
+  alias ls='eza'
+  alias ll='eza --all --long --extended --context --oneline'
+else
+  alias ll='ls -alF'
+fi
+
+alias cpwd='pwd | pbcopy'
+
+alias dir='dir --color=auto'
+
+alias grep='grep --color=auto'
+if command -v egrep &>/dev/null; then
+   alias egrep='egrep --color=auto'
+else
+   alias egrep='grep -E --color=auto'
+fi
+if command -v fgrep &>/dev/null; then
+   alias fgrep='fgrep --color=auto'
+else
+   alias fgrep='grep -F --color=auto'
+fi
+if command -v rgrep &>/dev/null; then
+   alias rgrep='rgrep --color=auto'
+else
+   alias rgrep='grep -r --color=auto'
+fi
+
+alias -- -='cd -'
+
+# Check if 'less' is aliased; if not, assign it
+if ! type less 2>/dev/null | grep -q "alias"; then
+   alias less='less ${LESS:-}'
+fi
+
+alias tolower="tr '[:upper:]' '[:lower:]'"
+alias toupper="tr '[:lower:]' '[:upper:]'"
+
+alias gss="git status"
+alias gsu="git status -uno"
+if command -v lazygit &>/dev/null; then
+   alias lg='lazygit'
+fi
+
+if command -v bat &>/dev/null; then
+   alias cat='bat'
+fi

@@ -6,13 +6,16 @@
 # Completions
 mattmc3/ez-compinit
 zsh-users/zsh-completions kind:fpath path:src
-aloxaf/fzf-tab  # Remove if you don't use fzf
+sunlei/zsh-ssh
+Aloxaf/fzf-tab  # Remove if you don't use fzf
+Freed-Wu/fzf-tab-source
 
 # Completion styles
 belak/zsh-utils path:completion/functions kind:autoload post:compstyle_zshzoo_setup
 
 # Keybindings
 belak/zsh-utils path:editor
+jeffreytse/zsh-vi-mode
 
 # History
 belak/zsh-utils path:history
