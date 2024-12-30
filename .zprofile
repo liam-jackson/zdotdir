@@ -1,2 +1,3 @@
+#!/usr/bin/env zsh
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+[[ -f "/opt/homebrew/bin/brew" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
