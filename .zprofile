@@ -24,4 +24,5 @@ fi
 
 if [[ -f "$HOME/.atuin/bin/env" ]]; then
   . "$HOME/.atuin/bin/env"
+  export ATUIN_NOBIND="true"
 fi

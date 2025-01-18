@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 # Manual last-minute keybinds to ensure they're set
 
 bindkey -M viins '^I' fzf-tab-complete

@@ -22,14 +22,15 @@
 # shell start-up file at all --- I had to tweak mine to make it do so.
 # So .zshenv is the safest place.
 
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
-export XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
-export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
-
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export ZDOTDIR="${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}"
+export ZFUNCDIR="${ZDOTDIR:-$HOME}/.zfunctions"
 
 if command -v nvim &>/dev/null; then
   export EDITOR="nvim"
@@ -43,6 +44,12 @@ export TMUX_PLUGIN_MANAGER_PATH="${TMUXDIR}/plugins"
 export TMUX_CONF="${TMUXDIR}/tmux.conf"
 export TMUX_POWERLINE_THEME='my-theme'
 
-export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-${HOME}/.config}/aws/config"
+if command -v fd &>/dev/null; then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+fi
+
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-${HOME}/.config}/ripgrep/ripgreprc"
+
 export NVM_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/nvm"
+
+export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-${HOME}/.config}/aws/config"
