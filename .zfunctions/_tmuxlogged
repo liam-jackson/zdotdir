@@ -1,0 +1,13 @@
+#compdef tmuxlogged
+
+# Zsh Completion
+# Enable completion for tmuxlogged command
+_tmuxlogged_completions() {
+  _arguments \
+    '--no-config[-n]:start a bare tmux session without a config file' \
+    '--config[-f]:start tmux with a specific configuration file' \
+    '--help[-h]:show usage information'
+}
+_tmuxlogged_completions
+
+compdef _tmuxlogged_completions tmuxlogged

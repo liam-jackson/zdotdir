@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+for _c in gh fzf bat; do
+	[[ ! command -v $_c &>/dev/null ]] && return 1
+fi
+# uses 'gh', 'fzf' and 'bat'
+gh search code $'#compdef fzf' \
+	--filename '_fzf' \
+	--json repository,path \
+	--jq '.[] | [.repository.nameWithOwner, .path] | @tsv' |
+	fzf --delimiter '\t' --with-nth 1 \
+		--preview 'gh api --cache 10m repos/{1}/contents/{2} \
+			--jq .content | base64 --decode | bat --language zsh --number' \
+		--preview-window 'nohidden:right:wrap:75%' \
+		--bind 'ctrl-b:execute-silent:gh browse --repo {1} {2}'

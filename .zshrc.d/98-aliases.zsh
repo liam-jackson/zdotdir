@@ -1,11 +1,10 @@
-#!/bin/zsh
 #
 # .aliases - Set whatever shell aliases you want.
 #
 
 # mask built-ins with better defaults
 if command -v vim &>/dev/null; then
-   alias vi=vim
+  alias vi=vim
 fi
 
 # tar
@@ -14,11 +13,11 @@ alias untar="tar -xf"
 
 # find
 if command -v fd &>/dev/null; then
-   alias fdd='fd -H -t d'
-   alias fdf='fd -H -t f'
+  alias fdd='fd -H -t d'
+  alias fdf='fd -H -t f'
 else
-   alias fdd='find . -type d -name'
-   alias fdf='find . -type f -name'
+  alias fdd='find . -type d -name'
+  alias fdf='find . -type f -name'
 fi
 
 # url encode/decode
@@ -30,13 +29,13 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; \
 # misc
 alias zbench='for i in {1..10}; do /usr/bin/time zsh -lic exit; done'
 
-alias zdot='cd ~/.config/workstation-dirs/; nvim ./zsh/.zshrc'
-alias ndot='cd ~/.config/workstation-dirs/; nvim ./nvim/init.lua'
-alias tdot='cd ~/.config/workstation-dirs/; nvim ./tmux/tmux.conf'
+alias zdot='nvim --cmd "cd ${ZDOTDIR:-$HOME}"'
+alias ndot='nvim --cmd "cd ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/"'
+alias tdot='nvim --cmd "cd ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/"'
 
 if command -v eza &>/dev/null; then
   alias ls='eza'
-  alias ll='eza --all --long --extended --context --oneline'
+  alias ll='eza --all --long'
 else
   alias ll='ls -alF'
 fi
@@ -47,26 +46,28 @@ alias dir='dir --color=auto'
 
 alias grep='grep --color=auto'
 if command -v egrep &>/dev/null; then
-   alias egrep='egrep --color=auto'
+  alias egrep='egrep --color=auto'
 else
-   alias egrep='grep -E --color=auto'
+  alias egrep='grep -E --color=auto'
 fi
 if command -v fgrep &>/dev/null; then
-   alias fgrep='fgrep --color=auto'
+  alias fgrep='fgrep --color=auto'
 else
-   alias fgrep='grep -F --color=auto'
+  alias fgrep='grep -F --color=auto'
 fi
 if command -v rgrep &>/dev/null; then
-   alias rgrep='rgrep --color=auto'
+  alias rgrep='rgrep --color=auto'
 else
-   alias rgrep='grep -r --color=auto'
+  alias rgrep='grep -r --color=auto'
 fi
 
 alias -- -='cd -'
 
+alias -g hush='2>/dev/null'
+
 # Check if 'less' is aliased; if not, assign it
 if ! type less 2>/dev/null | grep -q "alias"; then
-   alias less='less ${LESS:-}'
+  alias less='less ${LESS:-}'
 fi
 
 alias tolower="tr '[:upper:]' '[:lower:]'"
@@ -75,9 +76,14 @@ alias toupper="tr '[:lower:]' '[:upper:]'"
 alias gss="git status"
 alias gsu="git status -uno"
 if command -v lazygit &>/dev/null; then
-   alias lg='lazygit'
+  alias lg='lazygit'
 fi
 
 if command -v bat &>/dev/null; then
-   alias cat='bat'
+  alias cat='bat'
+  # alias cat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
+fi
+
+if command -v zoxide &>/dev/null; then
+  alias cd="z"
 fi

@@ -1,0 +1,63 @@
+# vim: set ft=bash:
+
+function tmuxlogged() {
+  # Default values
+  local config_file=""
+  local use_config=true
+
+  # Fallback config path
+  local default_config="$HOME/.tmux.conf"
+  if [[ -n "$XDG_CONFIG_HOME" ]]; then
+    default_config="$XDG_CONFIG_HOME/tmux/tmux.conf"
+  fi
+
+  # Define usage information
+  local usage="Usage: tmuxlogged [OPTIONS]
+Options:
+  --no-config, -n       Start a bare tmux session without a configuration file.
+  --config, -f [FILE]   Start a tmux session using the specified configuration file. 
+                        If no file is provided, uses the default user configuration 
+                          file: ($default_config).
+  --help, -h            Display this help message and logging details.
+
+Logs will be written to:
+  ~/.tmux-server-*.log"
+
+  # Parse flags
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --no-config|-n)
+        use_config=false
+        shift
+        ;;
+      --config|-f)
+        use_config=true
+        if [[ -n "$2" && "$2" != -* ]]; then
+          config_file="$2"
+          shift 2
+        else
+          config_file="$default_config"
+          shift
+        fi
+        ;;
+      --help|-h)
+        echo "$usage"
+        return 0
+        ;;
+      *)
+        echo "Invalid option: $1" >&2
+        echo "$usage" >&2
+        return 1
+        ;;
+    esac
+  done
+
+  # Handle session logic
+  if [[ $use_config == false ]]; then
+    tmux kill-server
+    tmux -vv -f/dev/null new
+  else
+    tmux kill-server
+    tmux -vv -f"${config_file:-$default_config}" new
+  fi
+}

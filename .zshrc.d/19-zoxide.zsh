@@ -1,2 +1,3 @@
-(( $+commands[zoxide] )) || return 1
-eval $(zoxide init zsh --cmd cd)
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
