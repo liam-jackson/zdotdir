@@ -3,7 +3,7 @@
 # .zshrc - Zsh file loaded on interactive shell sessions.
 #
 
-[[ -f "${zdotdir:-$HOME}/.shopts" ]] && source "${zdotdir:-$HOME}/.shopts"
+[[ -f "${ZDOTDIR:-$HOME}/.shopts" ]] && source "${ZDOTDIR:-$HOME}/.shopts"
 
 [[ -f "${ZDOTDIR:-$HOME}/.aliases" ]] && source "${ZDOTDIR:-$HOME}/.aliases"
 

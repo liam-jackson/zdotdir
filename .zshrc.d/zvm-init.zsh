@@ -1,5 +1,5 @@
 # Set vi-mode:
-export KEYTIMEOUT=1
+export ZVM_KEYTIMEOUT=0.1
 # export ZVM_LAZY_KEYBINDINGS=false
 
 # Do the initialization when the script is sourced (i.e. Initialize instantly)
@@ -29,6 +29,9 @@ function zvm_after_init() {
   _fzf_source
 }
 
+# Append a command directly
+zvm_after_init_commands+=(_fzf_source)
+
 # The plugin will auto execute this zvm_after_lazy_keybindings function
 function zvm_after_lazy_keybindings() {
   # Here we define the custom widget
@@ -37,4 +40,5 @@ function zvm_after_lazy_keybindings() {
   # In normal mode, press Ctrl-r to invoke this widget
   zvm_bindkey vicmd '^r' atuin-search
   zvm_bindkey viins '^r' atuin-search
+  zvm_bindkey viins '^I' fzf-tab-complete
 }
