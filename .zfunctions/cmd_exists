@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+cmd_exists() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: cmd_exists <command_name>"
+    echo "Returns 0 if the command exists, 1 otherwise."
+    return 1
+  fi
+
+  (( $+commands[$1] ))
+}
+
+# vim: set ft=zsh:

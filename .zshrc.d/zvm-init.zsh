@@ -17,7 +17,7 @@ function zvm_config() {
 
   # ZVM_VI_HIGHLIGHT_FOREGROUND=#008800        # Hex value
   # ZVM_VI_HIGHLIGHT_BACKGROUND=#ff0000        # Hex value
-  ZVM_VI_HIGHLIGHT_EXTRASTYLE=underline # bold and underline
+  ZVM_VI_HIGHLIGHT_EXTRASTYLE='underline' # bold and underline
 
   # Always starting with insert mode for each command line
   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
@@ -30,10 +30,12 @@ function zvm_after_init() {
 }
 
 # Append a command directly
-zvm_after_init_commands+=(_fzf_source)
+# zvm_after_init_commands+=(_fzf_source)
 
 # The plugin will auto execute this zvm_after_lazy_keybindings function
 function zvm_after_lazy_keybindings() {
+  [[ -f "${ZDOTDIR}/.keybinds" ]] && source "${ZDOTDIR}/.keybinds"
+
   # Here we define the custom widget
   # zvm_define_widget atuin-search
 
@@ -41,4 +43,7 @@ function zvm_after_lazy_keybindings() {
   zvm_bindkey vicmd '^r' atuin-search
   zvm_bindkey viins '^r' atuin-search
   zvm_bindkey viins '^I' fzf-tab-complete
+  zvm_bindkey viins '^A' fzf-help-widget
 }
+
+source "$(antidote path jeffreytse/zsh-vi-mode)/zsh-vi-mode.plugin.zsh"

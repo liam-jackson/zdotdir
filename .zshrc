@@ -16,9 +16,10 @@ fi
 # Lazy-load (autoload) Zsh function files from a directory.
 fpath=(
   "${ZFUNCDIR}"
-  "${HOMEBREW_PREFIX}/share/zsh-completions" 
   $fpath
 )
+
+[[ -f "${ZDOTDIR:-$HOME}/.zstyles" ]] && source "${ZDOTDIR:-$HOME}/.zstyles"
 
 # Source Antidote from Homebrew if available, otherwise clone from github.
 brew_antidote="${HOMEBREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh"
@@ -34,8 +35,6 @@ antidote load
 
 autoload -Uz $ZFUNCDIR/*(.:t)
 
-autoload -Uz compinit && compinit
-
 # Source anything in .zshrc.d.
 for _rc in ${ZDOTDIR:-$HOME}/.zshrc.d/*.zsh; do
   # Ignore tilde files.
@@ -44,9 +43,3 @@ for _rc in ${ZDOTDIR:-$HOME}/.zshrc.d/*.zsh; do
   fi
 done
 unset _rc
-source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-
-# Set any zstyles you might use for configuration.
-[[ -f "${ZDOTDIR:-$HOME}/.zstyles" ]] && source "${ZDOTDIR:-$HOME}/.zstyles"
-[[ -f "${ZDOTDIR}/.keybinds" ]] && source "${ZDOTDIR}/.keybinds"
-

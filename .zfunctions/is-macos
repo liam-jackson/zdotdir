@@ -1,2 +1,1 @@
-#!/usr/bin/env zsh
-[[ $OSTYPE == *darwin* ]]
+[[ $OSTYPE == *darwin* ]] && return 0

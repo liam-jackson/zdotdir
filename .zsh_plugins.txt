@@ -6,16 +6,18 @@ mattmc3/ez-compinit
 
 # Completions
 Aloxaf/fzf-tab
-sunlei/zsh-ssh
-Freed-Wu/fzf-tab-source
-conda-incubator/conda-zsh-completion
+BartSte/fzf-help kind:clone
+# sunlei/zsh-ssh
+# Freed-Wu/fzf-tab-source
+conda-incubator/conda-zsh-completion kind:fpath
 
 # Completion styles
-belak/zsh-utils path:completion/functions kind:autoload post:compstyle_zshzoo_setup
+belak/zsh-utils path:completion/functions kind:autoload
+# post:compstyle_zshzoo_setup
 
 # Keybindings
 # belak/zsh-utils path:editor
-# jeffreytse/zsh-vi-mode
+jeffreytse/zsh-vi-mode kind:clone
 
 # History
 # belak/zsh-utils path:history
@@ -24,9 +26,9 @@ belak/zsh-utils path:completion/functions kind:autoload post:compstyle_zshzoo_se
 romkatv/powerlevel10k
 
 # Utilities
-zshzoo/macos conditional:is-macos
+# zshzoo/macos conditional:is-macos
 belak/zsh-utils path:utility
-romkatv/zsh-bench kind:path
+# romkatv/zsh-bench kind:path
 
 # Other Fish-like features
 zdharma-continuum/fast-syntax-highlighting  # Syntax highlighting
