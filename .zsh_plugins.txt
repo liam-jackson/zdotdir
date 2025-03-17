@@ -12,8 +12,7 @@ BartSte/fzf-help kind:clone
 conda-incubator/conda-zsh-completion kind:fpath
 
 # Completion styles
-belak/zsh-utils path:completion/functions kind:autoload
-# post:compstyle_zshzoo_setup
+belak/zsh-utils path:completion/functions kind:autoload post:compstyle_zshzoo_setup
 
 # Keybindings
 # belak/zsh-utils path:editor

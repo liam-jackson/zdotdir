@@ -1,0 +1,18 @@
+function mcd() {
+  # mcd - Make and change directory
+  # Usage: mcd [directory]
+  # Creates the specified directory (if it doesn't exist) and changes to it.
+  local dir="${1:-.}" # Default to current directory if no argument is provided
+  if [[ ! -d "$dir" ]]; then
+    mkdir -p "$dir" || {
+      echo "Failed to create directory: $dir"
+      return 1
+    }
+  fi
+  cd "$dir" || {
+    echo "Failed to change to directory: $dir"
+    return 1
+  }
+}
+
+# vim: set ft=zsh:
