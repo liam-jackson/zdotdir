@@ -23,20 +23,31 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 #
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
+
 # set descriptions format to enable group support
 # NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
 zstyle ':completion:*:descriptions' format '[%d]'
+
 # set list-colors to enable filename colorizing
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# make completions case insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 # force zsh not to show completion menu, which allows fzf-tab to capture the 
 # unambiguous prefix
 zstyle ':completion:*' menu no
 # zstyle ':completion:*' use-cache on
+
 zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
+
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --all --color=always $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --all --color=always $realpath'
+
 zstyle ':fzf-tab:complete:-command-:*' fzf-preview \
   '(out=$(tldr --color always "$word") 2>/dev/null && echo $out) || (out=$(MANWIDTH=$FZF_PREVIEW_COLUMNS man "$word") 2>/dev/null && echo $out) || (out=$(which "$word") && echo $out) || echo "${(P)word}"'
+
 # custom fzf flags
 # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
 zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 # --bind=tab:accept
@@ -46,6 +57,7 @@ zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 # --bind=tab:accept
 # zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
+
 # If you're using tmux >= 3.2, we provide a script ftb-tmux-popup to make full use of 
 # it's "popup" feature
 if [[ -n $TMUX ]]; then
