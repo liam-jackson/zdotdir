@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+# git@github.com:LangLangBart/gh-find-code.git
 
 for _c in gh fzf bat; do
 	[[ ! command -v $_c &>/dev/null ]] && return 1
