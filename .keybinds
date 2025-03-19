@@ -3,7 +3,9 @@
 # Manual last-minute keybinds to ensure they're set
 
 bindkey '^I' fzf-tab-complete
-bindkey "^A" fzf-help-widget
+bindkey "^XA" fzf-help-widget
+
+bindkey '^Xh' _complete_help && enable-fzf-tab
 
 function append-last-word {
   ((++CURSOR))

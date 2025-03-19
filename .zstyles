@@ -11,6 +11,7 @@
 # The argument; this indicates which command line or option argument we are completing. For command arguments this generally takes the form argument-n, where n is the number of the argument, and for arguments to options the form option-opt-n where n is the number of the argument to option opt. However, this is only the case if the command line is parsed with standard UNIX-style options and arguments, so many completions do not set this.
 # The tag. As described previously, tags are used to discriminate between the types of matches a completion function can generate in a certain context. Any completion function may use any tag name it likes, but a list of the more common ones is given below.
 #
+# https://thevaluable.dev/zsh-completion-guide-examples/#:~:text=To%20configure%20the%20completion%20system,users%E2%80%9D%2C%20or%20%E2%80%9Coptions%E2%80%9D%20are%20tags.
 
 #
 # Antidote
@@ -21,15 +22,7 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 #
 # Aloxaf/fzf-tab
 #
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-
-# set descriptions format to enable group support
-# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
-zstyle ':completion:*:descriptions' format '[%d]'
-
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' verbose yes
 
 # make completions case insensitive
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -37,34 +30,60 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 # force zsh not to show completion menu, which allows fzf-tab to capture the 
 # unambiguous prefix
 zstyle ':completion:*' menu no
-# zstyle ':completion:*' use-cache on
 
-zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
-
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --all --color=always $realpath'
-zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --all --color=always $realpath'
-
-zstyle ':fzf-tab:complete:-command-:*' fzf-preview \
-  '(out=$(tldr --color always "$word") 2>/dev/null && echo $out) || (out=$(MANWIDTH=$FZF_PREVIEW_COLUMNS man "$word") 2>/dev/null && echo $out) || (out=$(which "$word") && echo $out) || echo "${(P)word}"'
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' show-group full
+# zstyle ':completion:*:descriptions' format "$fg[yellow]%B--- %d%b"
+# zstyle ':completion:*:messages' format '%d'
+# zstyle ':completion:*:warnings' format "$fg[red]No matches for:$reset_color %d"
+# zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
+#
+# set list-colors to enable filename colorizing
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # custom fzf flags
 # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
 zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 # --bind=tab:accept
+
 # To make fzf-tab follow FZF_DEFAULT_OPTS.
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See 
 # Aloxaf/fzf-tab#455.
 # zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:*' group-colors $FZF_TAB_GROUP_COLORS
+
+# # preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --all --color=always $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --all --color=always $realpath'
+#
+# zstyle ':fzf-tab:complete:cat:*' fzf-preview 'cat $realpath'
+# zstyle ':fzf-tab:complete:bat:*' fzf-preview 'cat $realpath'
+#
+# zstyle ':fzf-tab:complete:-command-:*' fzf-preview '(out=$(tldr --color always "$word") 2>/dev/null && echo $out) 
+#   || (out=$(MANWIDTH=$FZF_PREVIEW_COLUMNS man "$word") 2>/dev/null && echo $out) 
+#   || (out=$(which "$word") && echo $out) 
+#   || echo "${(P)word}"'
 
 # If you're using tmux >= 3.2, we provide a script ftb-tmux-popup to make full use of 
 # it's "popup" feature
 if [[ -n $TMUX ]]; then
   zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+  # apply to all command
+  zstyle ':fzf-tab:*' popup-min-size 50 8
+  # only apply to 'diff'
+  zstyle ':fzf-tab:complete:diff:*' popup-min-size 80 12
 fi
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
 
 # Conda completion
 zstyle ':completion::complete:*' use-cache 1
 zstyle ":conda_zsh_completion:*" use-groups true
-#
+
+# # Apt and Nala (if on linux)
+# zstyle ':completion::complete:apt:*' use-cache 1
+# zstyle ':completion::complete:nala:*' use-cache 1
+
+# vim: set ft=bash:

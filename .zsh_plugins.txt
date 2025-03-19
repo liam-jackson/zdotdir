@@ -8,7 +8,7 @@ mattmc3/ez-compinit
 Aloxaf/fzf-tab
 BartSte/fzf-help kind:clone
 # sunlei/zsh-ssh
-# Freed-Wu/fzf-tab-source
+Freed-Wu/fzf-tab-source
 conda-incubator/conda-zsh-completion kind:fpath
 
 # Completion styles

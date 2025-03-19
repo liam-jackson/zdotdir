@@ -31,6 +31,13 @@ if command -v nvim &>/dev/null; then
   export VISUAL="nvim"
 fi
 
+export COLOR_THEME='modus_vivendi_deuteranopia'
+export DARK_THEME='modus_vivendi_deuteranopia'
+export LIGHT_THEME='modus_operandi_tinted'
+
+export LESS="-iRF --use-color --incsearch"
+export LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"
+
 export NVIMDIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
 
 export TMUXDIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux"
@@ -38,17 +45,25 @@ export TMUX_PLUGIN_MANAGER_PATH="${TMUXDIR}/plugins"
 export TMUX_CONF="${TMUXDIR}/tmux.conf"
 export TMUX_POWERLINE_THEME='my-theme'
 
+if command -v bat &>/dev/null; then
+  export BAT_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/bat"
+  export BAT_CONFIG_PATH="${BAT_CONFIG_DIR}/config"
+  export BAT_THEME_LIGHT="${LIGHT_THEME}"
+  export BAT_THEME_DARK="${DARK_THEME}"
+  # alias cat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
+fi
+
 if command -v fd &>/dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 fi
+
+EZA_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/eza"
 
 FZF_TAB_GROUP_COLORS=(
   $'\033[94m' $'\033[32m' $'\033[33m' $'\033[35m' $'\033[31m' $'\033[38;5;27m' $'\033[36m'
   $'\033[38;5;100m' $'\033[38;5;98m' $'\033[91m' $'\033[38;5;80m' $'\033[92m'
   $'\033[38;5;214m' $'\033[38;5;165m' $'\033[38;5;124m' $'\033[38;5;120m'
 )
-
-export LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"
 
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-${HOME}/.config}/ripgrep/ripgreprc"
 

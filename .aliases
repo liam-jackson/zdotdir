@@ -84,5 +84,7 @@ if command -v zoxide &>/dev/null; then
   alias cd="z"
 fi
 
+alias dark_mode_enabled='$(is-macos && $(defaults read -globalDomain AppleInterfaceStyle &>/dev/null))'
+
 ### global aliases:
 alias -g hush='2>/dev/null'

@@ -3,6 +3,11 @@
 # .zshrc - Zsh file loaded on interactive shell sessions.
 #
 
+zmodload zsh/termcap
+zmodload zsh/terminfo
+zmodload zsh/complist
+autoload -Uz compinit
+
 [[ -f "${ZDOTDIR:-$HOME}/.shopts" ]] && source "${ZDOTDIR:-$HOME}/.shopts"
 [[ -f "${ZDOTDIR:-$HOME}/.aliases" ]] && source "${ZDOTDIR:-$HOME}/.aliases"
 
