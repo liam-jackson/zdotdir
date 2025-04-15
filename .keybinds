@@ -12,5 +12,4 @@ function append-last-word {
   zle insert-last-word
 }
 zle -N append-last-word
-bindkey -M vicmd '\e.' append-last-word
 bindkey -M viins '\e.' append-last-word
