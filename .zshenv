@@ -58,7 +58,6 @@ FZF_TAB_GROUP_COLORS=(
 )
 
 export LESS="-iRF --use-color --incsearch --search-options=W"
-# export LESSOPEN="|${brew_prefix}/bin/lesspipe.sh %s"
 if [[ -f "${XDG_CONFIG_HOME}/less/lessfilter" ]]; then
   [[ ! -e "${HOME}/.lessfilter" ]] && ln -s "${XDG_CONFIG_HOME}/less/lessfilter" "${HOME}/.lessfilter"
   export LESSOPEN="|${HOME}/.lessfilter %s"

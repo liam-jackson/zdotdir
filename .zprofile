@@ -9,6 +9,12 @@ path=(
   $path
 )
 
+# Lazy-load (autoload) Zsh function files from a directory.
+fpath=(
+  "${ZFUNCDIR}"
+  $fpath
+)
+
 local brew_prefix
 if [[ -d "/opt/homebrew" ]]; then
   brew_prefix="/opt/homebrew"
@@ -23,6 +29,8 @@ fi
 export PAGER="${brew_prefix}/bin/less"
 export MANPAGER="${brew_prefix}/bin/less"
 export MANPATH="${brew_prefix}/share/man:$MANPATH"
+
+unset brew_prefix
 
 if [[ -f "$HOME/.cargo/env" ]]; then
   . "$HOME/.cargo/env"

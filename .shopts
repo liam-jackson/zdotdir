@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+zmodload zsh/termcap
+zmodload zsh/terminfo
+zmodload zsh/complist
+autoload -Uz compinit
+
 # https://zsh.sourceforge.io/Guide/zshguide02.html#l28
 # My rule of thumb is to put as many options as possible into ~/.zshrc, and transfer
 # them to ~/.zshenv if I find I need them there.

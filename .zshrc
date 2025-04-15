@@ -3,11 +3,6 @@
 # .zshrc - Zsh file loaded on interactive shell sessions.
 #
 
-zmodload zsh/termcap
-zmodload zsh/terminfo
-zmodload zsh/complist
-autoload -Uz compinit
-
 [[ -f "${ZDOTDIR:-$HOME}/.shopts" ]] && source "${ZDOTDIR:-$HOME}/.shopts"
 [[ -f "${ZDOTDIR:-$HOME}/.aliases" ]] && source "${ZDOTDIR:-$HOME}/.aliases"
 
@@ -17,12 +12,6 @@ autoload -Uz compinit
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-# Lazy-load (autoload) Zsh function files from a directory.
-fpath=(
-  "${ZFUNCDIR}"
-  $fpath
-)
 
 [[ -f "${ZDOTDIR:-$HOME}/.zstyles" ]] && source "${ZDOTDIR:-$HOME}/.zstyles"
 
