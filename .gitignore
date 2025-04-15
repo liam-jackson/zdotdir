@@ -6,9 +6,11 @@
 .zcompdump*
 .zsh_history
 .zsh_plugins.zsh
+.zplugins/*
 *.bak
 *.local
 *.local.zsh
+*.log
 *.zwc
 *.zwc.old
 ~*

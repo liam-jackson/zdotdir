@@ -9,12 +9,6 @@ path=(
   $path
 )
 
-# Lazy-load (autoload) Zsh function files from a directory.
-fpath=(
-  "${ZFUNCDIR}"
-  $fpath
-)
-
 local brew_prefix
 if [[ -d "/opt/homebrew" ]]; then
   brew_prefix="/opt/homebrew"
@@ -39,4 +33,5 @@ fi
 if [[ -f "$HOME/.atuin/bin/env" ]]; then
   export ATUIN_NOBIND="true"
   . "$HOME/.atuin/bin/env"
+  eval "$(atuin init zsh)"
 fi

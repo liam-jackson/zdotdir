@@ -25,12 +25,21 @@ else
   source "$gith_antidote"
 fi
 unset brew_antidote gith_antidote
-antidote load
 
+# Source anything in .zshrc.d.
+for _rc in ${ZDOTDIR:-$HOME}/.zshrc.d/pre-compinit/*.zsh; do
+  # Ignore tilde files.
+  if [[ $_rc:t != '~'* ]]; then
+    source "$_rc"
+  fi
+done
+unset _rc
+
+antidote load
 autoload -Uz $ZFUNCDIR/*(.:t)
 
 # Source anything in .zshrc.d.
-for _rc in ${ZDOTDIR:-$HOME}/.zshrc.d/*.zsh; do
+for _rc in ${ZDOTDIR:-$HOME}/.zshrc.d/post-compinit/*.zsh; do
   # Ignore tilde files.
   if [[ $_rc:t != '~'* ]]; then
     source "$_rc"

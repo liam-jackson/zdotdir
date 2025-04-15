@@ -17,4 +17,4 @@ if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/mamba.sh" ]; then
 fi
 # <<< conda initialize <<<
 
-# $(conda env list | grep -q default) && mamba activate default
+fpath+=${ZPLUGINS}/conda-zsh-completion

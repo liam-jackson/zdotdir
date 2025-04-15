@@ -1,0 +1,109 @@
+#!/usr/bin/env zsh
+
+if [[ ! -f "${HOME}/.zshenv" ]]; then
+  cat <<'EOF' > "${HOME}/.zshenv"
+#!/usr/bin/env zsh
+
+########################################################################################################################
+#
+# .zshenv - Zsh environment file, loaded always.
+#
+
+export ZDOTDIR="${HOME}/.config/zsh"
+
+. "${ZDOTDIR}/.zshenv"
+EOF
+fi
+
+source "${ZDOTDIR}/env-vars"
+source "${ZDOTDIR}/shell-opts"
+source "${ZDOTDIR}/history-opts"
+source "${ZDOTDIR}/aliases"
+
+########################################################################################################################
+#
+# .zprofile
+#
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU path fpath
+
+# Set the list of directories that zsh searches for commands.
+path=(
+  $HOME/{,s}bin(N)
+  $HOME/.local/{,s}bin(N)
+  /opt/{local}/{,s}bin(N)
+  /usr/local/{,s}bin(N)
+  $path
+)
+
+local brew_prefix
+if [[ -d "/opt/homebrew" ]]; then
+  brew_prefix="/opt/homebrew"
+elif [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+  brew_prefix="/home/linuxbrew/.linuxbrew"
+fi
+
+if [[ -f "${brew_prefix}/bin/brew" ]]; then 
+  eval "$(${brew_prefix}/bin/brew shellenv)"
+
+  export PAGER="${brew_prefix}/bin/less"
+  export MANPAGER="${brew_prefix}/bin/less"
+  export MANPATH="${brew_prefix}/share/man:$MANPATH"
+fi 
+unset brew_prefix
+
+if [[ -f "$HOME/.cargo/env" ]]; then
+  . "$HOME/.cargo/env"
+fi
+
+if [[ -f "$HOME/.atuin/bin/env" ]]; then
+  export ATUIN_NOBIND="true"
+  . "$HOME/.atuin/bin/env"
+  eval "$(atuin init zsh)"
+fi
+
+########################################################################################################################
+#
+# .zshrc - Zsh file loaded on interactive shell sessions.
+#
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of .zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+########################################################################################################################
+
+zmodload zsh/termcap
+zmodload zsh/terminfo
+zmodload zsh/complist
+
+autoload -Uz bashcompinit && bashcompinit
+autoload -Uz compinit
+
+# autoload -Uz $ZFUNCDIR/*(.:t)
+# Lazy-load (autoload) Zsh function files from a directory.
+fpath=(
+  "${ZFUNCDIR}"
+  $fpath
+)
+
+for _rc in ${ZDOTDIR:-$HOME}/.zshrc.d/pre-compinit/*.zsh; do
+  if [[ $_rc:t != '~'* ]]; then
+    source "$_rc"
+  fi
+done
+unset _rc
+
+compinit
+
+for _rc in ${ZDOTDIR:-$HOME}/.zshrc.d/post-compinit/*.zsh; do
+  if [[ $_rc:t != '~'* ]]; then
+    source "$_rc"
+  fi
+done
+unset _rc
+
+# source "${ZDOTDIR}/zstyles"

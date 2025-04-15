@@ -48,4 +48,4 @@ function zvm_after_lazy_keybindings() {
   zvm_bindkey viins '\e.' append-last-word
 }
 
-source "$(antidote path jeffreytse/zsh-vi-mode)/zsh-vi-mode.zsh"
+source "${ZPLUGINS}/zsh-vi-mode/zsh-vi-mode.zsh"

@@ -1,8 +1,5 @@
 #!/usr/bin/env zsh
 
-# Ensure path arrays do not contain duplicates.
-typeset -gU path fpath
-
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
@@ -10,6 +7,7 @@ export LC_CTYPE=en_US.UTF-8
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+
 export ZDOTDIR="${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}"
 export ZFUNCDIR="${ZDOTDIR}/.zfunctions"
 export ZPLUGINS="${ZDOTDIR}/.zplugins"
@@ -46,8 +44,8 @@ FZF_TAB_GROUP_COLORS=(
 export LESS="-iRF --use-color --incsearch --search-options=W"
 if [[ -f "${XDG_CONFIG_HOME}/less/lessfilter" ]]; then
   [[ ! -e "${HOME}/.lessfilter" ]] && ln -s "${XDG_CONFIG_HOME}/less/lessfilter" "${HOME}/.lessfilter"
-  export LESSOPEN="|${HOME}/.lessfilter %s"
 fi
+export LESSOPEN="|${HOME}/.lessfilter %s"
 
 export NVM_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/nvm"
 

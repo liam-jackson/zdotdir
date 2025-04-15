@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+#
+# shell options
+#
+
+# https://zsh.sourceforge.io/Guide/zshguide02.html#l28
+# My rule of thumb is to put as many options as possible into ~/.zshrc, and transfer
+# them to ~/.zshenv if I find I need them there.
+setopt no_beep
+setopt auto_cd
+setopt glob_dots
+setopt interactive_comments
+
