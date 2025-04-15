@@ -30,20 +30,18 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 # force zsh not to show completion menu, which allows fzf-tab to capture the 
 # unambiguous prefix
 zstyle ':completion:*' menu no
+# zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*:default' use-cache 1
+zstyle ':completion:*:default' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/.zcompcache"
 
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':fzf-tab:*' show-group full
-# zstyle ':completion:*:descriptions' format "$fg[yellow]%B--- %d%b"
-# zstyle ':completion:*:messages' format '%d'
-# zstyle ':completion:*:warnings' format "$fg[red]No matches for:$reset_color %d"
-# zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
-#
 # set list-colors to enable filename colorizing
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:*' show-group full
 
 # custom fzf flags
 # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
-zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 # --bind=tab:accept
+zstyle ':fzf-tab:*' fzf-flags --bind 'focus:transform-preview-label:[[ -n {} ]] && printf " Previewing [%s] " {}'
 
 # To make fzf-tab follow FZF_DEFAULT_OPTS.
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See 
@@ -64,6 +62,18 @@ zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1 --all --color=always $realpat
 #   || (out=$(MANWIDTH=$FZF_PREVIEW_COLUMNS man "$word") 2>/dev/null && echo $out) 
 #   || (out=$(which "$word") && echo $out) 
 #   || echo "${(P)word}"'
+zstyle ':fzf-tab:complete:-command-:*' fzf-preview \
+  '(out=$(tldr --color always "$word") 2>/dev/null && echo $out) ||
+  (out=$(MANWIDTH=$FZF_PREVIEW_COLUMNS man "$word") 2>/dev/null && echo $out) ||
+  (out=$(which "$word") && echo $out) ||
+  echo "${(P)word}"'
+
+# zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color always $word'
+# zstyle ':fzf-tab:complete:(\\|)run-help:*' fzf-preview 'run-help $word'
+# zstyle ':fzf-tab:complete:(\\|*/|)man:*' fzf-preview 'man $word'
+
+# Linux only:
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
 # If you're using tmux >= 3.2, we provide a script ftb-tmux-popup to make full use of 
 # it's "popup" feature
@@ -79,7 +89,6 @@ fi
 zstyle ':completion:*:git-checkout:*' sort false
 
 # Conda completion
-zstyle ':completion::complete:*' use-cache 1
 zstyle ":conda_zsh_completion:*" use-groups true
 
 # # Apt and Nala (if on linux)
