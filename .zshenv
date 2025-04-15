@@ -35,29 +35,21 @@ export COLOR_THEME='modus_vivendi_deuteranopia'
 export DARK_THEME='modus_vivendi_deuteranopia'
 export LIGHT_THEME='modus_operandi_tinted'
 
-export LESS="-iRF --use-color --incsearch"
-export LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"
-
-export NVIMDIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
-
-export TMUXDIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux"
-export TMUX_PLUGIN_MANAGER_PATH="${TMUXDIR}/plugins"
-export TMUX_CONF="${TMUXDIR}/tmux.conf"
-export TMUX_POWERLINE_THEME='my-theme'
+# Customizing user software options
+export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-${HOME}/.config}/aws/config"
 
 if command -v bat &>/dev/null; then
   export BAT_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/bat"
   export BAT_CONFIG_PATH="${BAT_CONFIG_DIR}/config"
   export BAT_THEME_LIGHT="${LIGHT_THEME}"
   export BAT_THEME_DARK="${DARK_THEME}"
-  # alias cat="bat --theme=\$(defaults read -globalDomain AppleInterfaceStyle &> /dev/null && echo default || echo GitHub)"
 fi
+
+export EZA_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/eza"
 
 if command -v fd &>/dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 fi
-
-EZA_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/eza"
 
 FZF_TAB_GROUP_COLORS=(
   $'\033[94m' $'\033[32m' $'\033[33m' $'\033[35m' $'\033[31m' $'\033[38;5;27m' $'\033[36m'
@@ -65,8 +57,20 @@ FZF_TAB_GROUP_COLORS=(
   $'\033[38;5;214m' $'\033[38;5;165m' $'\033[38;5;124m' $'\033[38;5;120m'
 )
 
-export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-${HOME}/.config}/ripgrep/ripgreprc"
+export LESS="-iRF --use-color --incsearch --search-options=W"
+# export LESSOPEN="|${brew_prefix}/bin/lesspipe.sh %s"
+if [[ -f "${XDG_CONFIG_HOME}/less/lessfilter" ]]; then
+  [[ ! -e "${HOME}/.lessfilter" ]] && ln -s "${XDG_CONFIG_HOME}/less/lessfilter" "${HOME}/.lessfilter"
+  export LESSOPEN="|${HOME}/.lessfilter %s"
+fi
 
 export NVM_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/nvm"
 
-export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-${HOME}/.config}/aws/config"
+export NVIMDIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvim"
+
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME:-${HOME}/.config}/ripgrep/ripgreprc"
+
+export TMUXDIR="${XDG_CONFIG_HOME:-$HOME/.config}/tmux"
+export TMUX_PLUGIN_MANAGER_PATH="${TMUXDIR}/plugins"
+export TMUX_CONF="${TMUXDIR}/tmux.conf"
+export TMUX_POWERLINE_THEME='my-theme'

@@ -9,9 +9,20 @@ path=(
   $path
 )
 
-if [[ -f "/opt/homebrew/bin/brew" ]]; then 
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+local brew_prefix
+if [[ -d "/opt/homebrew" ]]; then
+  brew_prefix="/opt/homebrew"
+elif [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+  brew_prefix="/home/linuxbrew/.linuxbrew"
+fi
+
+if [[ -f "${brew_prefix}/bin/brew" ]]; then 
+  eval "$(${brew_prefix}/bin/brew shellenv)"
 fi 
+
+export PAGER="${brew_prefix}/bin/less"
+export MANPAGER="${brew_prefix}/bin/less"
+export MANPATH="${brew_prefix}/share/man:$MANPATH"
 
 if [[ -f "$HOME/.cargo/env" ]]; then
   . "$HOME/.cargo/env"
