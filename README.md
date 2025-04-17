@@ -1,6 +1,6 @@
 # Z Shell Start-up Scripts
 
-![image order](./assets/zsh-startup-order.png)
+![image order](./docs/assets/zsh-startup-order.png)
 
 <html>
 <style type="text/css">
